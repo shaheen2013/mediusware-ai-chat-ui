@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>IntellixChat</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container": "#eaeff1",
+            "tertiary-container": "#007aff",
+            "surface-container-high": "#e2e9ec",
+            "on-primary-container": "#525151",
+            "background": "#f8f9fa",
+            "tertiary-fixed-dim": "#006ee6",
+            "on-surface-variant": "#586064",
+            "on-primary-fixed": "#403f3f",
+            "primary": "#5f5e5e",
+            "on-secondary-fixed": "#3f3f3f",
+            "on-secondary-container": "#515252",
+            "surface": "#f8f9fa",
+            "primary-fixed-dim": "#d6d4d3",
+            "surface-tint": "#5f5e5e",
+            "secondary-fixed": "#e3e2e2",
+            "error-container": "#fe8983",
+            "tertiary-fixed": "#007aff",
+            "on-background": "#2b3437",
+            "surface-container-highest": "#dbe4e7",
+            "primary-fixed": "#e5e2e1",
+            "surface-dim": "#d1dce0",
+            "inverse-primary": "#ffffff",
+            "on-primary-fixed-variant": "#5c5b5b",
+            "on-secondary-fixed-variant": "#5b5b5b",
+            "primary-container": "#e5e2e1",
+            "on-tertiary-fixed": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#f8f8ff",
+            "inverse-surface": "#0c0f10",
+            "tertiary": "#005bc2",
+            "surface-variant": "#dbe4e7",
+            "on-secondary": "#faf8f8",
+            "tertiary-dim": "#0050ab",
+            "secondary": "#5f5f5f",
+            "on-surface": "#2b3437",
+            "primary-dim": "#535252",
+            "surface-container-low": "#f1f4f6",
+            "outline-variant": "#abb3b7",
+            "on-primary": "#faf7f6",
+            "on-error-container": "#752121",
+            "secondary-dim": "#535353",
+            "secondary-fixed-dim": "#d5d4d4",
+            "secondary-container": "#e3e2e2",
+            "on-tertiary-container": "#000000",
+            "on-tertiary": "#f9f8ff",
+            "error-dim": "#4e0309",
+            "outline": "#737c7f",
+            "inverse-on-surface": "#9b9d9e",
+            "surface-bright": "#f8f9fa",
+            "error": "#9f403d",
+            "on-error": "#fff7f6"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .font-headline {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #dbe4e7;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background h-screen w-screen overflow-hidden flex">
+  <!-- SideNavBar (Shared Component) -->
+  <aside
+    class="hidden lg:flex flex-col py-8 px-4 space-y-6 bg-slate-50/50 dark:bg-slate-950/50 backdrop-blur-2xl h-screen w-72 flex-shrink-0 border-r border-slate-100/10">
+    <div class="flex items-center gap-3 px-2">
+      <div
+        class="w-10 h-10 rounded-full bg-gradient-to-br from-tertiary to-tertiary-container flex items-center justify-center text-white shadow-lg">
+        <img src="assets/images/intellix logo.png" alt="Logo" class="w-full h-full object-cover rounded-full" />
+      </div>
+      <div>
+        <h1 class="font-headline font-bold text-slate-800 dark:text-slate-200 text-lg leading-tight">IntellixChat
+        </h1>
+        <p class="text-xs text-on-surface-variant font-medium tracking-wide">Premium Editorial AI</p>
+      </div>
+    </div>
+    <div class="px-2">
+      <button
+        class="w-full py-3 px-4 bg-gradient-to-r from-tertiary to-tertiary-container text-white rounded-xl font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95">
+        <span class="material-symbols-outlined text-sm" data-icon="add_circle">add_circle</span>
+        New Thread
+      </button>
+    </div>
+    <nav class="flex-1 space-y-2 px-2 overflow-y-auto custom-scrollbar">
+      <div
+        class="bg-white/80 dark:bg-slate-800/80 text-[#007AFF] font-semibold rounded-xl px-4 py-3 shadow-sm flex items-center gap-3 cursor-pointer">
+        <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+        <span>New Chat</span>
+      </div>
+      <div
+        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-3 hover:bg-slate-100/60 transition-colors duration-200 flex items-center gap-3 cursor-pointer">
+        <span class="material-symbols-outlined" data-icon="history">history</span>
+        <span>History</span>
+      </div>
+      <div class="pt-6 pb-2 px-4">
+        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold">Recent Threads</p>
+      </div>
+      <div
+        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-2 hover:bg-slate-100/60 transition-colors duration-200 rounded-lg text-sm truncate cursor-pointer">
+        Understanding Polymer Science
+      </div>
+      <div
+        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-2 hover:bg-slate-100/60 transition-colors duration-200 rounded-lg text-sm truncate cursor-pointer">
+        The History of Non-stick
+      </div>
+    </nav>
+    <div class="border-t border-slate-200/20 pt-6 px-2 space-y-1">
+      <div
+        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-3 hover:bg-slate-100/60 transition-colors duration-200 flex items-center gap-3 cursor-pointer">
+        <span class="material-symbols-outlined" data-icon="settings">settings</span>
+        <span>Settings</span>
+      </div>
+      <div
+        class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-3 hover:bg-slate-100/60 transition-colors duration-200 flex items-center gap-3 cursor-pointer">
+        <span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+        <span>Support</span>
+      </div>
+    </div>
+  </aside>
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col relative h-full bg-surface">
+    <!-- TopAppBar (Shared Component Overlay) -->
+    <header
+      class="fixed top-0 right-0 left-0 lg:left-72 z-50 bg-[#f8f9fa]/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 border-none shadow-none">
+      <div class="flex items-center gap-4">
+        <h2 class="font-headline font-extrabold text-slate-900 text-lg tracking-tight">Current Thread</h2>
+        <span
+          class="px-2 py-0.5 bg-surface-container-high rounded text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Model:
+          Intellix-1.0</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="p-2 text-slate-500 hover:bg-slate-200/40 rounded-full transition-all active:scale-95">
+          <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+        </button>
+        <button class="p-2 text-slate-500 hover:bg-slate-200/40 rounded-full transition-all active:scale-95">
+          <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+        </button>
+      </div>
+    </header>
+    <!-- Chat Canvas -->
+    <section class="flex-1 overflow-y-auto px-6 lg:px-24 pt-24 pb-32 custom-scrollbar">
+      <div class="max-w-4xl mx-auto space-y-10">
+        <!-- Message 1: User -->
+        <div class="flex flex-col items-end group">
+          <div
+            class="bg-gradient-to-br from-tertiary to-tertiary-container text-white px-6 py-4 rounded-xl rounded-tr-sm shadow-sm max-w-[80%]">
+            <p class="text-body-lg font-medium leading-relaxed">What is Teflon?</p>
+          </div>
+          <span
+            class="text-[10px] text-on-surface-variant mt-2 opacity-0 group-hover:opacity-100 transition-opacity uppercase font-bold tracking-tighter">10:42
+            AM • Delivered</span>
+        </div>
+        <!-- Message 2: AI -->
+        <div class="flex flex-col items-start group">
+          <div class="flex gap-4 items-start max-w-[90%]">
+            <div
+              class="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center">
+              <img src="assets/images/intellix logo.png" alt="Logo" class="w-full h-full object-cover rounded-full" />
+            </div>
+            <div
+              class="bg-surface-container-lowest backdrop-blur-sm px-6 py-5 rounded-xl rounded-tl-sm shadow-[0_4px_24px_rgba(43,52,55,0.04)] border border-white/50">
+              <p class="text-body-lg text-on-background leading-relaxed">
+                Teflon is a brand name for a synthetic chemical called <span
+                  class="font-bold text-tertiary">polytetrafluoroethylene (PTFE)</span>. It's best known for its use in
+                non-stick coatings for cookware, but it's also used in clothing, industrial applications, and medical
+                devices due to its high heat resistance and low friction.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Message 3: User -->
+        <div class="flex flex-col items-end group">
+          <div
+            class="bg-gradient-to-br from-tertiary to-tertiary-container text-white px-6 py-4 rounded-xl rounded-tr-sm shadow-sm max-w-[80%]">
+            <p class="text-body-lg font-medium leading-relaxed">Is Teflon harmful for health?</p>
+          </div>
+          <span
+            class="text-[10px] text-on-surface-variant mt-2 opacity-0 group-hover:opacity-100 transition-opacity uppercase font-bold tracking-tighter">10:44
+            AM • Delivered</span>
+        </div>
+        <!-- Message 4: AI -->
+        <div class="flex flex-col items-start group">
+          <div class="flex gap-4 items-start max-w-[90%]">
+            <div
+              class="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center">
+              <img src="assets/images/intellix logo.png" alt="Logo" class="w-full h-full object-cover rounded-full" />
+            </div>
+            <div
+              class="bg-surface-container-lowest backdrop-blur-sm px-6 py-5 rounded-xl rounded-tl-sm shadow-[0_4px_24px_rgba(43,52,55,0.04)] border border-white/50 space-y-4">
+              <p class="text-body-lg text-on-background leading-relaxed">
+                Teflon itself is generally considered non-toxic. However, health concerns are primarily related to <span
+                  class="font-semibold underline decoration-tertiary/30">PFOA (perfluorooctanoic acid)</span>, a
+                chemical previously used to manufacture Teflon. Modern Teflon products are PFOA-free.
+              </p>
+              <div class="bg-surface-container-low/50 p-4 rounded-lg border border-surface-container-high">
+                <p class="text-sm text-on-surface-variant italic">
+                  "Concerns also arise if non-stick pans are overheated (above 500°F/260°C), which can cause the coating
+                  to break down and release fumes."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Message 5: User -->
+        <div class="flex flex-col items-end group">
+          <div
+            class="bg-gradient-to-br from-tertiary to-tertiary-container text-white px-6 py-4 rounded-xl rounded-tr-sm shadow-sm max-w-[80%]">
+            <p class="text-body-lg font-medium leading-relaxed">Where is Teflon used?</p>
+          </div>
+        </div>
+        <!-- Message 6: AI Generating -->
+        <div class="flex flex-col items-start">
+          <div class="flex gap-4 items-start">
+            <div
+              class="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center">
+              <img src="assets/images/intellix logo.png" alt="Logo" class="w-full h-full object-cover rounded-full" />
+            </div>
+            <div
+              class="bg-surface-container-lowest backdrop-blur-sm px-6 py-4 rounded-xl rounded-tl-sm shadow-[0_2px_12px_rgba(43,52,55,0.02)] border border-white/50 flex items-center gap-3">
+              <span class="text-sm font-medium text-on-surface-variant">IntellixChat is typing</span>
+              <div class="flex gap-1">
+                <span class="w-1 h-1 bg-tertiary rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                <span class="w-1 h-1 bg-tertiary rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                <span class="w-1 h-1 bg-tertiary rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Input Area -->
+    <footer
+      class="absolute bottom-0 left-0 right-0 p-6 lg:p-8 bg-gradient-to-t from-surface via-surface/90 to-transparent">
+      <div class="max-w-4xl mx-auto relative group">
+        <div
+          class="flex items-center gap-3 bg-surface-container-low/60 backdrop-blur-2xl px-6 py-4 rounded-full border border-outline-variant/15 shadow-sm focus-within:shadow-md focus-within:bg-surface-container-lowest transition-all duration-300">
+          <button class="text-on-surface-variant hover:text-tertiary transition-colors">
+            <span class="material-symbols-outlined" data-icon="add">add</span>
+          </button>
+          <input
+            class="flex-1 bg-transparent border-none focus:ring-0 text-on-background placeholder:text-on-surface-variant/50 text-body-md font-medium"
+            placeholder="Curate your next inquiry..." type="text" />
+          <button
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-tertiary to-tertiary-container text-white shadow-md active:scale-90 transition-transform">
+            <span class="material-symbols-outlined text-xl" data-icon="arrow_upward">arrow_upward</span>
+          </button>
+        </div>
+        <!-- <div class="flex justify-center mt-4 gap-4 overflow-x-auto whitespace-nowrap pb-2">
+          <button
+            class="bg-surface-container-high/40 hover:bg-surface-container-high px-4 py-1.5 rounded-full text-[11px] font-bold text-on-surface-variant uppercase tracking-wider transition-colors border border-outline-variant/5">
+            Summarize
+          </button>
+          <button
+            class="bg-surface-container-high/40 hover:bg-surface-container-high px-4 py-1.5 rounded-full text-[11px] font-bold text-on-surface-variant uppercase tracking-wider transition-colors border border-outline-variant/5">
+            Check Accuracy
+          </button>
+          <button
+            class="bg-surface-container-high/40 hover:bg-surface-container-high px-4 py-1.5 rounded-full text-[11px] font-bold text-on-surface-variant uppercase tracking-wider transition-colors border border-outline-variant/5">
+            Tone: Professional
+          </button>
+        </div> -->
+      </div>
+    </footer>
+    <!-- Decorative Background Elements -->
+    <div class="absolute top-1/4 right-0 w-96 h-96 bg-tertiary/5 rounded-full blur-[120px] pointer-events-none -z-10">
+    </div>
+    <div
+      class="absolute bottom-1/4 left-0 w-72 h-72 bg-tertiary-container/5 rounded-full blur-[100px] pointer-events-none -z-10">
+    </div>
+  </main>
+  <!-- Visual Identity Mask for Content Rendering -->
+  <div class="hidden">
+    <img alt="Liquid Texture"
+      data-alt="abstract flowing liquid texture in soft blue and white hues with premium editorial glass aesthetic"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHqZTMTU8C6k0oM_y3H00Eoq54l1VZAYNgAjSEBa1bz4LH4m0_rsPjnjyhCt78a2q6qA-2tnHIxp6mMP_Vdx_JMfo0dMWxGeIOrIPm6ebSLorJ9vkfbNU52Q7gUhfMT35p61b5teHtj7t4P1m7n6qgCRcvG8hBtbfQ4gJazaxKJfAtZfgctwJNGSpxC65GM7mF96N99lDgm2w7AF3KC8ht_OHmd7TCDfn-J3DtzEfMBoBu9i8x75aBN3iyidfL4B8ld4nP2sDmB7U" />
+  </div>
+</body>
+
+</html>
