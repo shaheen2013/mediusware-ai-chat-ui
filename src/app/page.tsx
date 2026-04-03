@@ -29,8 +29,8 @@ export default function Home() {
     <div className="flex-1 flex flex-col relative h-full">
       {/* TopAppBar */}
       <header className="w-full h-16 flex items-center justify-between px-6 z-10 bg-transparent">
-        <div className="flex items-center gap-2">
-          <span className="font-headline font-semibold text-lg text-slate-900 uppercase tracking-tighter opacity-70">Intellix v1.0</span>
+        <div className="flex items-center gap-2 bg-slate-300/50 rounded-full">
+          <span className="font-headline font-semibold text-lg text-slate-900 uppercase tracking-tighter opacity-70"></span>
         </div>
         <div className="flex items-center gap-4">
           <button className="text-slate-400 hover:opacity-70 transition-opacity cursor-pointer p-2 rounded-full hover:bg-slate-200/20">
