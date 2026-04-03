@@ -45,6 +45,20 @@ export default function ChatPage() {
     const handleSend = async (content: string) => {
         if (!content.trim() || isTyping) return;
 
+        // Save to history if it's the first message
+        if (messages.length === 0) {
+            const stored = localStorage.getItem('intellix_chats');
+            let chats = stored ? JSON.parse(stored) : [];
+            const chatId = params.id as string;
+            if (!chats.find((c: any) => c.id === chatId)) {
+                // Slice content for title if it's too long
+                const title = content.length > 30 ? content.substring(0, 30) + '...' : content;
+                chats = [{ id: chatId, title }, ...chats];
+                localStorage.setItem('intellix_chats', JSON.stringify(chats));
+                window.dispatchEvent(new Event('chatUpdate'));
+            }
+        }
+
         const userMessage: Message = {
             role: 'user',
             content,
@@ -98,7 +112,9 @@ export default function ChatPage() {
             {/* Header */}
             <header className="fixed top-0 right-0 left-0 lg:left-72 z-50 bg-[#f8f9fa]/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 border-none">
                 <div className="flex items-center gap-4">
-                    <h2 className="font-headline font-bold text-slate-800 text-lg tracking-tight">Current Chat</h2>
+                    <h2 className="font-headline font-bold text-slate-800 text-lg tracking-tight">
+                        {messages[0]?.content.length > 25 ? messages[0]?.content.substring(0, 25) + '...' : messages[0]?.content || 'New Chat'}
+                    </h2>
                     <span className="px-2 py-0.5 bg-slate-200/50 rounded-md text-[10px] font-bold text-slate-500 uppercase tracking-widest border border-slate-300/30">
                         MODEL: INTELLIX-1.0
                     </span>
@@ -139,9 +155,7 @@ export default function ChatPage() {
                                     </>
                                 ) : (
                                     <div className="flex gap-4 items-start max-w-[90%]">
-                                        <div className="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center overflow-hidden">
-                                            <img src="/assets/images/intellix-logo.png" alt="Logo" className="w-full h-full object-cover" />
-                                        </div>
+                                        <img src="/assets/images/intellixChat.png" alt="Logo" className="w-8 h-8 object-contain flex-shrink-0" />
                                         <div className="bg-surface-container-lowest backdrop-blur-sm px-6 py-5 rounded-xl rounded-tl-sm shadow-[0_4px_24px_rgba(43,52,55,0.04)] border border-white/50">
                                             <p className="text-body text-on-background leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                                             <span className="text-[10px] text-on-surface-variant mt-2 block opacity-60 uppercase font-bold tracking-tighter">
@@ -157,9 +171,7 @@ export default function ChatPage() {
                     {isTyping && (
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-start">
                             <div className="flex gap-4 items-start">
-                                <div className="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center overflow-hidden">
-                                    <img src="/assets/images/intellix-logo.png" alt="Logo" className="w-full h-full object-cover" />
-                                </div>
+                                <img src="/assets/images/intellixChat.png" alt="Logo" className="w-8 h-8 object-contain flex-shrink-0" />
                                 <div className="bg-surface-container-lowest backdrop-blur-sm px-6 py-4 rounded-xl rounded-tl-sm shadow-[0_2px_12px_rgba(43,52,55,0.02)] border border-white/50 flex items-center gap-3">
                                     <span className="text-sm font-medium text-on-surface-variant">IntellixChat is typing</span>
                                     <div className="flex gap-1">

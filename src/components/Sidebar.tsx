@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PlusCircle, History, Settings, HelpCircle, MessageSquare } from 'lucide-react';
+import { PlusCircle, History, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -14,6 +15,25 @@ function cn(...inputs: ClassValue[]) {
 export default function Sidebar() {
     const pathname = usePathname();
 
+    const [chats, setChats] = React.useState<{ id: string, title: string }[]>([]);
+
+    React.useEffect(() => {
+        const loadChats = () => {
+            const stored = localStorage.getItem('intellix_chats');
+            if (stored) {
+                try {
+                    setChats(JSON.parse(stored));
+                } catch (e) {
+                    console.error("Failed to parse chats", e);
+                }
+            }
+        };
+
+        loadChats();
+        window.addEventListener('chatUpdate', loadChats);
+        return () => window.removeEventListener('chatUpdate', loadChats);
+    }, []);
+
     const navItems = [
         { icon: <PlusCircle size={20} />, label: 'New Chat', href: '/', active: pathname === '/' },
         { icon: <History size={20} />, label: 'History', href: '#', active: false },
@@ -21,15 +41,22 @@ export default function Sidebar() {
         { icon: <HelpCircle size={20} />, label: 'Support', href: '#', active: false },
     ];
 
+    const handleLogout = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
+
     return (
         <aside className="hidden lg:flex flex-col py-8 px-4 space-y-6 bg-slate-50/50 backdrop-blur-2xl h-screen w-72 flex-shrink-0 border-r border-slate-100/10">
             <div className="flex items-center gap-3 px-2">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-tertiary to-tertiary-container flex items-center justify-center text-white shadow-lg overflow-hidden">
-                    <img src="/assets/images/intellix-logo.png" alt="Logo" className="w-full h-full object-cover" />
-                </div>
+                <img src="/assets/images/intellixChat.png" alt="Logo" className="w-10 h-10 object-contain" />
                 <div>
                     <h1 className="font-headline font-bold text-slate-800 text-lg leading-tight">IntellixChat</h1>
-                    <p className="text-xs text-on-surface-variant font-medium tracking-wide">Premium Editorial AI</p>
+                    <p className="text-xs text-on-surface-variant font-medium tracking-wide">Advanced AI Assistant</p>
                 </div>
             </div>
 
@@ -54,11 +81,29 @@ export default function Sidebar() {
                     <p className="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-bold">Recent Threads</p>
                 </div>
 
-                <div className="text-slate-500 hover:text-slate-900 px-4 py-2 hover:bg-slate-100/60 transition-colors duration-200 rounded-lg text-sm truncate cursor-pointer">
-                    Understanding Polymer Science
-                </div>
-                <div className="text-slate-500 hover:text-slate-900 px-4 py-2 hover:bg-slate-100/60 transition-colors duration-200 rounded-lg text-sm truncate cursor-pointer">
-                    The History of Non-stick
+                <div className="space-y-1">
+                    {chats.length > 0 ? (
+                        <AnimatePresence>
+                            {chats.map((chat) => (
+                                <Link key={chat.id} href={`/chat/${chat.id}`}>
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        className={cn(
+                                            "text-slate-500 hover:text-slate-900 px-4 py-2 hover:bg-slate-100/60 transition-all duration-200 rounded-xl text-sm truncate cursor-pointer",
+                                            pathname === `/chat/${chat.id}` && "bg-tertiary/10 text-tertiary font-semibold"
+                                        )}
+                                    >
+                                        {chat.title}
+                                    </motion.div>
+                                </Link>
+                            ))}
+                        </AnimatePresence>
+                    ) : (
+                        <div className="px-4 py-2 text-sm text-slate-400 italic">
+                            No histories
+                        </div>
+                    )}
                 </div>
             </nav>
 
@@ -69,17 +114,20 @@ export default function Sidebar() {
                 </div>
 
                 <div className="flex items-center gap-3 pt-2">
-                    <div className="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
-                        <img
-                            alt="User Profile"
-                            className="w-full h-full object-cover"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBqTTcMg0IPhR_pAagN1fH4byZSJMqemA5cBemAzpcy1jiDjimFmYU0skW-2H16Kl1dEVB6QdXCWyF1h1Xi7125A1dezBn5lw-38pBkjVbd4Hwfanj_A9P2SVBLw_fqjcWXIPLBi8NAjrOkt0LLJuL34U5HyJWGZqFXM3nyyCOPdQcPEFg53YrCJaykvCEwJkBkW-YEJx4FwQnjDIK2ioJ8V-qy2mgMZUjA4xwc4mcW8OMq-D8uyHfGg9upwz3hJM_cp7icGoEVtI"
-                        />
+                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md">
+                        M
                     </div>
                     <div className="flex-1 overflow-hidden">
-                        <p className="text-xs font-bold truncate">Alex Sterling</p>
-                        <p className="text-[10px] text-on-surface-variant truncate">alex.s@design.co</p>
+                        <p className="text-xs font-bold truncate">Mediusware Admin</p>
+                        <p className="text-[10px] text-on-surface-variant truncate">kahmad@mediusware.com</p>
                     </div>
+                    <button
+                        onClick={handleLogout}
+                        className="p-1.5 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-lg transition-colors group"
+                        title="Logout"
+                    >
+                        <LogOut size={16} />
+                    </button>
                 </div>
             </div>
         </aside>

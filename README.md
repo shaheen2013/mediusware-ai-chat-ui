@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IntellixChat — Premium AI-Driven Editorial Assistant
+
+**IntellixChat** is a high-performance, precision-engineered AI platform designed for professional editorial excellence. Built on a cutting-edge **Next.js 16** architecture, it provides a seamless, glassmorphic chat experience optimized for efficiency and responsiveness.
+
+## Proprietary AI Engine
+At the heart of the platform lies the **Intellix-V1.0** model — our custom-developed inference engine. 
+- **Superfast Performance**: Optimized for rapid response delivery.
+- **Resource Efficient**: Low-latency execution with minimal resource consumption.
+- **Precision Output**: Specially tuned for professional editorial and creative tasks.
+
+## Key Features
+- **Modern Interface**: A sleek, immersive design powered by Tailwind CSS 4 and Framer Motion.
+- **Dynamic Context**: Real-time history persistence with active conversation tracking.
+- **Resilient Infrastructure**: Integrated Redis-based session management with fail-safe local memory fallbacks.
+- **Enterprise-Ready**: Scalable architecture designed for high-concurrency environments.
+
+## Technical Architecture
+- **Framework**: Next.js 16 (Turbopack)
+- **Styling**: Vanilla CSS Foundations with Tailwind CSS 4 Transitions
+- **Logic**: TypeScript 5, React 19
+- **Inference**: Custom Secure Proxy API Wrapper
 
 ## Getting Started
+### Setup Environment
+Configure your local environment by creating a `.env.local` based on `.env.example`.
 
-First, run the development server:
-
+### Installation
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+© 2026 Mediusware. All rights reserved.
