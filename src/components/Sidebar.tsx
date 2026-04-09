@@ -37,8 +37,8 @@ export default function Sidebar() {
     const navItems = [
         { icon: <PlusCircle size={20} />, label: 'New Chat', href: '/', active: pathname === '/' },
         { icon: <History size={20} />, label: 'History', href: '#', active: false },
-        { icon: <Settings size={20} />, label: 'Settings', href: '#', active: false },
-        { icon: <HelpCircle size={20} />, label: 'Support', href: '#', active: false },
+        // { icon: <Settings size={20} />, label: 'Settings', href: '#', active: false },
+        // { icon: <HelpCircle size={20} />, label: 'Support', href: '#', active: false },
     ];
 
     const handleLogout = async () => {
@@ -108,10 +108,10 @@ export default function Sidebar() {
             </nav>
 
             <div className="mt-auto border-t border-slate-200/20 pt-6 px-2 space-y-4">
-                <div className="bg-tertiary/5 p-4 rounded-xl border border-tertiary/10">
+                {/* <div className="bg-tertiary/5 p-4 rounded-xl border border-tertiary/10">
                     <p className="text-xs font-semibold text-tertiary mb-2">Upgrade to Pro</p>
                     <p className="text-[11px] text-on-surface-variant leading-relaxed">Experience faster response times and priority access.</p>
-                </div>
+                </div> */}
 
                 <div className="flex items-center gap-3 pt-2">
                     <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md">
