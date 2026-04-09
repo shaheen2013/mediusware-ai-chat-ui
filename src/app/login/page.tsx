@@ -53,16 +53,16 @@ export default function LoginPage() {
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="relative z-10 glass-panel px-12 py-16 rounded-xl border border-white/20 max-w-md mx-8"
+                    className="relative z-10 liquid-glass px-12 py-16 rounded-xl border border-white/20 max-w-md mx-8"
                 >
                     <div className="flex flex-col items-start gap-6">
                         <div className="flex items-center gap-4">
                             <img src="/assets/images/intellixChat.png" alt="Logo" className="w-16 h-16 object-contain" />
-                            <h1 className="font-headline font-extrabold text-5xl tracking-tighter leading-tight text-on-surface">
+                            <h1 className="font-headline font-extrabold text-5xl tracking-tighter leading-tight text-white">
                                 IntellixChat
                             </h1>
                         </div>
-                        <p className="font-body text-on-surface-variant text-lg font-light leading-relaxed">
+                        <p className="font-body text-center text-white text-lg font-light leading-relaxed opacity-90">
                             The next-generation AI assistant designed to think along with you.
                         </p>
                     </div>
@@ -101,7 +101,7 @@ export default function LoginPage() {
                         <div className="space-y-2">
                             <div className="flex justify-between items-center px-1">
                                 <label className="font-label text-xs font-semibold uppercase tracking-widest text-on-surface-variant">Password</label>
-                                <a className="text-xs font-medium text-tertiary hover:underline" href="#">Forgot?</a>
+                                {/* <a className="text-xs font-medium text-tertiary hover:underline" href="#">Forgot?</a> */}
                             </div>
                             <div className="relative group">
                                 <input
@@ -126,11 +126,11 @@ export default function LoginPage() {
                             type="submit"
                             disabled={loading}
                         >
-                            {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Login to Portal'}
+                            {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Login'}
                         </button>
                     </form>
 
-                    <div className="mt-10 mb-8 flex items-center gap-4">
+                    {/* <div className="mt-10 mb-8 flex items-center gap-4">
                         <div className="h-px flex-1 bg-outline-variant/20"></div>
                         <span className="text-xs font-medium text-outline uppercase tracking-wider">Or continue with</span>
                         <div className="h-px flex-1 bg-outline-variant/20"></div>
@@ -152,13 +152,13 @@ export default function LoginPage() {
                             </svg>
                             <span className="text-sm font-medium text-on-surface">GitHub</span>
                         </button>
-                    </div>
+                    </div> */}
 
-                    <div className="mt-12 text-center">
+                    {/* <div className="mt-12 text-center">
                         <p className="text-on-surface-variant text-sm font-light">
                             Don't have an account? <a className="text-tertiary font-semibold hover:underline" href="#">Create Account</a>
                         </p>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Footer */}
