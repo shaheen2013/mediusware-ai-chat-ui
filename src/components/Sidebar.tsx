@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { PlusCircle, History, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { PlusCircle, History, Settings, HelpCircle, LogOut, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -15,7 +15,11 @@ function cn(...inputs: ClassValue[]) {
 export default function Sidebar() {
     const pathname = usePathname();
 
+    const router = useRouter();
+
     const [chats, setChats] = React.useState<{ id: string, title: string }[]>([]);
+    const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+    const [chatToDelete, setChatToDelete] = React.useState<string | null>(null);
 
     React.useEffect(() => {
         const loadChats = () => {
@@ -48,6 +52,32 @@ export default function Sidebar() {
         } catch (error) {
             console.error('Logout failed:', error);
         }
+    };
+
+    const handleDeleteChat = (e: React.MouseEvent, id: string) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setChatToDelete(id);
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        if (!chatToDelete) return;
+
+        const stored = localStorage.getItem('intellix_chats');
+        if (stored) {
+            const chats = JSON.parse(stored);
+            const updatedChats = chats.filter((c: any) => c.id !== chatToDelete);
+            localStorage.setItem('intellix_chats', JSON.stringify(updatedChats));
+            setChats(updatedChats);
+
+            // If deleting the current chat, redirect to home
+            if (pathname === `/chat/${chatToDelete}`) {
+                router.push('/');
+            }
+        }
+        setShowDeleteModal(false);
+        setChatToDelete(null);
     };
 
     return (
@@ -90,11 +120,17 @@ export default function Sidebar() {
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         className={cn(
-                                            "text-slate-500 hover:text-slate-900 px-4 py-2 hover:bg-slate-100/60 transition-all duration-200 rounded-xl text-sm truncate cursor-pointer",
+                                            "group flex items-center justify-between text-slate-500 hover:text-slate-900 px-4 py-2 hover:bg-slate-100/60 transition-all duration-200 rounded-xl text-sm cursor-pointer",
                                             pathname === `/chat/${chat.id}` && "bg-tertiary/10 text-tertiary font-semibold"
                                         )}
                                     >
-                                        {chat.title}
+                                        <span className="truncate">{chat.title}</span>
+                                        <button
+                                            onClick={(e) => handleDeleteChat(e, chat.id)}
+                                            className="opacity-0 group-hover:opacity-100 p-1 hover:text-red-500 transition-all"
+                                        >
+                                            <Trash2 size={14} />
+                                        </button>
                                     </motion.div>
                                 </Link>
                             ))}
@@ -130,6 +166,52 @@ export default function Sidebar() {
                     </button>
                 </div>
             </div>
+
+            {/* Delete Confirmation Modal */}
+            <AnimatePresence>
+                {showDeleteModal && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowDeleteModal(false)}
+                            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                            className="relative w-full max-w-sm bg-white/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/50 p-8 overflow-hidden"
+                        >
+                            {/* Decorative Background */}
+                            <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+
+                            <div className="relative z-10">
+                                <h3 className="text-xl font-headline font-bold text-slate-900 mb-2">IntellixChat says</h3>
+                                <p className="text-slate-600 text-sm leading-relaxed mb-8">
+                                    Are you sure you want to delete this conversation? This action cannot be undone.
+                                </p>
+
+                                <div className="flex gap-3">
+                                    <button
+                                        onClick={() => setShowDeleteModal(false)}
+                                        className="flex-1 px-4 py-3 rounded-xl bg-slate-100 text-slate-800 font-semibold text-sm hover:bg-slate-200 transition-colors active:scale-[0.98]"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={confirmDelete}
+                                        className="flex-1 px-4 py-3 rounded-xl bg-red-500 text-white font-semibold text-sm hover:bg-red-600 shadow-lg shadow-red-500/20 transition-all active:scale-[0.98]"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </aside>
     );
 }
