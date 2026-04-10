@@ -68,9 +68,9 @@ export default function Home() {
             )}
           >
             <div className="flex items-center px-6 h-14 md:h-16 gap-4">
-              <button type="button" className="text-on-surface-variant opacity-50 hover:opacity-100 transition-opacity">
+              {/* <button type="button" className="text-on-surface-variant opacity-50 hover:opacity-100 transition-opacity">
                 <Paperclip size={20} />
-              </button>
+              </button> */}
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
